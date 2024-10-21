@@ -15,3 +15,9 @@ export const isInRange =
 	};
 
 export const isUnit = isInRange(0, 1);
+
+export const lerp =
+	(a: number, b: number) =>
+	(weight: number): number => {
+		return a + (b - a) * weight;
+	};

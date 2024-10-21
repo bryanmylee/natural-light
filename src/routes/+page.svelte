@@ -8,10 +8,10 @@
 	import TemperatureSlider from './TemperatureSlider.svelte';
 
 	const temperatureKelvin = transformed(
-		useLocalStorage('temperature_in_kelvin', '6595'),
+		useLocalStorage('temperature_in_kelvin', '6600'),
 		(input) => {
 			const floatValue = parseFloat(input);
-			return isNaN(floatValue) ? temperature.plainWhite : temperature.kelvin(floatValue);
+			return isNaN(floatValue) ? temperature.white : temperature.kelvin(floatValue);
 		},
 		(output) => String(output)
 	);

@@ -12,8 +12,8 @@
 		elements: { root, range, thumbs }
 	} = createSlider({
 		value: smoothValue,
-		min: 3000,
-		max: 9000,
+		min: 2600,
+		max: 10600,
 		step: 1
 	});
 </script>
