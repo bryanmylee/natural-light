@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { transformed } from '$lib/store';
+	import { snappedSpring, transformed } from '$lib/store';
 	import { useLocalStorage } from '$lib/storage';
 	import * as temperature from '$lib/color/temperature';
 	import * as rgb from '$lib/color/rgb';
@@ -8,7 +8,6 @@
 	import TemperatureSlider from './TemperatureSlider.svelte';
 	import { lerp } from '$lib/math';
 	import TemperatureTextInput from './TemperatureTextInput.svelte';
-	import { spring } from 'svelte/motion';
 
 	const tempKelvin = transformed(
 		useLocalStorage('temperature_in_kelvin', '6600'),
@@ -19,7 +18,13 @@
 		(output) => String(output)
 	);
 
-	const smoothTempKelvin = spring($tempKelvin);
+	const smoothTempKelvin = snappedSpring($tempKelvin, {
+		snapPoints: temperature.samples.map((sample) => ({
+			min: temperature.kelvin(sample.ideal - 250),
+			value: sample.ideal,
+			max: temperature.kelvin(sample.ideal + 250)
+		}))
+	});
 	$: tempKelvin.set($smoothTempKelvin);
 
 	$: tempHsl = pipe($tempKelvin, temperature.toRgb, rgb.toHsl);
@@ -58,12 +63,16 @@
 		<div class="flex-1" />
 		<div class="p-8 flex flex-col">
 			<TemperatureSlider valueStore={smoothTempKelvin} />
-			<div class="h-4" />
+			<div class="h-2" />
 			<TemperatureTextInput bind:value={$smoothTempKelvin} />
-			<a
-				href="https://bryanmylee.com"
-				class="w-fit uppercase font-semibold tracking-wide text-[--temp-ink]">Bryan Lee</a
-			>
+			<div class="text-[clamp(0.9rem,1rem+1vw,5rem)]">
+				<p class="font-semibold">{temperature.getSample($smoothTempKelvin).name}</p>
+				<a
+					href="https://bryanmylee.com"
+					class="w-fit uppercase font-semibold text-[0.75em] focus-visible:outline-none focus-visible:underline text-[--temp-ink]"
+					>Bryan Lee</a
+				>
+			</div>
 		</div>
 	</div>
 </div>

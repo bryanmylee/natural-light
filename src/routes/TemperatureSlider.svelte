@@ -11,7 +11,7 @@
 			valueStore.set(newValue[0]);
 		},
 		update(updater: Updater<temperature.Kelvin[]>) {
-			valueStore.update(($value) => updater([$value])[0]);
+			valueStore.update((prev) => updater([prev])[0]);
 		}
 	};
 

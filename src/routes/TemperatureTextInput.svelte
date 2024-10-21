@@ -14,7 +14,7 @@
 </script>
 
 <form
-	class="font-bold text-[clamp(0.9rem,1rem+4vw,10rem)] text-[--temp-ink-black] relative"
+	class="font-extrabold text-[clamp(0.9rem,1rem+4vw,10rem)] text-[--temp-ink-black] relative"
 	on:submit={(ev) => {
 		ev.preventDefault();
 		updateValue();

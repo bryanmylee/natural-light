@@ -11,12 +11,38 @@ export const kelvinUnsafe = (value: number): Kelvin => {
 	return value as Kelvin;
 };
 
-export const min = kelvinUnsafe(2600);
-export const max = kelvinUnsafe(10600);
+export const min = kelvinUnsafe(1600);
+export const max = kelvinUnsafe(11600);
+
+export type TemperatureSample = {
+	ideal: Kelvin;
+	name: string;
+};
+
+export const samples: TemperatureSample[] = [
+	{ name: 'Candlelight', ideal: kelvin(1600) },
+	{ name: 'Incandescent', ideal: kelvin(3000) },
+	{ name: 'Fluorescent', ideal: kelvin(4000) },
+	{ name: 'Sunset', ideal: kelvin(5000) },
+	{ name: 'Daylight', ideal: kelvin(6000) },
+	{ name: 'White', ideal: kelvin(6600) },
+	{ name: 'Overcast', ideal: kelvin(8000) },
+	{ name: 'Screen', ideal: kelvin(10000) }
+];
+
+export const getSample = (temperature: Kelvin): TemperatureSample => {
+	for (let i = 0; i < samples.length - 1; i++) {
+		const sample = samples[i];
+		const nextSample = samples[i + 1];
+		if (temperature < sample.ideal) return sample;
+		if (temperature < (sample.ideal + nextSample.ideal) / 2) return sample;
+	}
+	return samples[samples.length - 1];
+};
+
 export const white = kelvinUnsafe(6600);
 export const whiteLow = kelvinUnsafe(6400);
 export const whiteHigh = kelvinUnsafe(6800);
-
 /**
  * Return a smooth curve crossing (whiteLow, 0), (white, 1), (whiteHigh, 0).
  */
