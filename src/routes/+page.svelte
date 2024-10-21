@@ -8,6 +8,7 @@
 	import TemperatureSlider from './TemperatureSlider.svelte';
 	import { lerp } from '$lib/math';
 	import TemperatureTextInput from './TemperatureTextInput.svelte';
+	import { setDocumentColor } from '$lib/document';
 
 	const tempKelvin = transformed(
 		useLocalStorage('temperature_in_kelvin', '6600'),
@@ -28,6 +29,7 @@
 	$: tempKelvin.set($smoothTempKelvin);
 
 	$: tempHsl = pipe($tempKelvin, temperature.toRgb, rgb.toHsl);
+	$: setDocumentColor(tempHsl);
 	$: whiteFactor = temperature.whiteFactor($tempKelvin);
 </script>
 
