@@ -1,19 +1,26 @@
 <script lang="ts">
-	import type { Kelvin } from '$lib/color/temperature';
+	import * as temperature from '$lib/color/temperature';
 	import { createSlider, melt } from '@melt-ui/svelte';
-	import { spring } from 'svelte/motion';
+	import { derived, type Updater, type Writable } from 'svelte/store';
 
-	export let value: Kelvin;
+	export let valueStore: Writable<temperature.Kelvin>;
 
-	const smoothValue = spring([value]);
-	$: value = $smoothValue[0];
+	const value = {
+		...derived(valueStore, ($valueStore) => [$valueStore]),
+		set(newValue: temperature.Kelvin[]) {
+			valueStore.set(newValue[0]);
+		},
+		update(updater: Updater<temperature.Kelvin[]>) {
+			valueStore.update(($value) => updater([$value])[0]);
+		}
+	};
 
 	const {
 		elements: { root, range, thumbs }
 	} = createSlider({
-		value: smoothValue,
-		min: 2600,
-		max: 10600,
+		value,
+		min: temperature.min,
+		max: temperature.max,
 		step: 1
 	});
 </script>
