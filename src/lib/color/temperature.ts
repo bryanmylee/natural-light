@@ -7,13 +7,29 @@ export function kelvin(value: number): Kelvin {
 	return value as Kelvin;
 }
 
-export const white = kelvin(6595);
+export const white = kelvin(6600);
+export const whiteLow = kelvin(6400);
+export const whiteHigh = kelvin(6800);
+
+/**
+ * Return a smooth curve crossing (whiteLow, 0), (white, 1), (whiteHigh, 0).
+ */
+export function whiteFactor(temperature: Kelvin): number {
+	if (temperature < whiteLow || temperature > whiteHigh) return 0;
+	// map whiteLow..whiteHigh to 0..1
+	const x = (temperature - whiteLow) / (whiteHigh - whiteLow);
+	// map x to a U-shaped curve crossing (0, 1), (0.5, 0), (1, 1)
+	const u = 0.5 * (1 - Math.sin(2 * Math.PI * (x - 0.25)));
+	// the flatness at the base of the curve
+	const f = 1.25;
+	return 1 - Math.pow(u, f);
+}
 
 /**
  * https://github.com/neilbartlett/color-temperature
  */
-export function toRgb(kelvin: Kelvin): rgb.Rgb {
-	const temperature = kelvin / 100;
+export function toRgb(temperature: Kelvin): rgb.Rgb {
+	temperature = kelvin(temperature / 100);
 	let red: number, green: number, blue: number;
 
 	if (temperature < 66.0) {

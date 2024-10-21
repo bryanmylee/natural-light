@@ -6,6 +6,7 @@
 	import * as hsl from '$lib/color/hsl';
 	import { pipe } from '$lib/pipe';
 	import TemperatureSlider from './TemperatureSlider.svelte';
+	import { lerp } from '$lib/math';
 
 	const temperatureKelvin = transformed(
 		useLocalStorage('temperature_in_kelvin', '6600'),
@@ -16,28 +17,34 @@
 		(output) => String(output)
 	);
 	$: temperatureHsl = pipe($temperatureKelvin, temperature.toRgb, rgb.toHsl);
+	$: whiteFactor = temperature.whiteFactor($temperatureKelvin);
 </script>
 
 <div
 	class="fixed inset-0 flex flex-col items-center bg-[--temp-paper]"
 	style:--temp-paper={pipe(temperatureHsl, hsl.toCssProperty)}
-	style:--temp-ink={pipe(temperatureHsl, hsl.darken(0.9), hsl.desaturate(0.1), hsl.toCssProperty)}
+	style:--temp-ink={pipe(
+		temperatureHsl,
+		hsl.darken(0.8),
+		hsl.desaturate(lerp(0.2, 1)(whiteFactor)),
+		hsl.toCssProperty
+	)}
 	style:--temp-track-empty={pipe(
 		temperatureHsl,
 		hsl.darken(0.6),
-		hsl.desaturate(0.6),
+		hsl.desaturate(lerp(0.6, 1)(whiteFactor)),
 		hsl.toCssProperty
 	)}
 	style:--temp-track-filled={pipe(
 		temperatureHsl,
 		hsl.darken(0.3),
-		hsl.desaturate(0.5),
+		hsl.desaturate(lerp(0.5, 1)(whiteFactor)),
 		hsl.toCssProperty
 	)}
 	style:--temp-highlight={pipe(
 		temperatureHsl,
 		hsl.darken(-0.05),
-		hsl.desaturate(0.2),
+		hsl.desaturate(lerp(0.2, 1)(whiteFactor)),
 		hsl.toCssProperty
 	)}
 >
