@@ -33,6 +33,10 @@
 	$: whiteFactor = temperature.whiteFactor($tempKelvin);
 </script>
 
+<svelte:head>
+	<title>Natural Light</title>
+</svelte:head>
+
 <div
 	class="fixed inset-0 flex flex-col items-center bg-[--temp-paper]"
 	style:--temp-paper={pipe(tempHsl, hsl.toCssProperty)}
