@@ -19,12 +19,12 @@
 </script>
 
 <span use:melt={$root} class="relative flex h-[20px] items-center">
-	<span class="h-1 w-full bg-[--temp-track-empty]">
-		<span {...$range} use:range class="h-1 bg-[--temp-track-filled]" />
+	<span class="h-1 w-full bg-[--temp-ink-dark]">
+		<span {...$range} use:range class="h-1 bg-[--temp-ink]" />
 	</span>
 
 	<span
 		use:melt={$thumbs[0]}
-		class="h-5 w-5 rounded-full bg-[--temp-track-filled] focus-visible:outline-none focus-visible:ring-4 ring-[--temp-paper]"
+		class="h-5 w-5 rounded-full bg-[--temp-ink] focus-visible:outline-none focus-visible:ring-4 ring-[--temp-paper]"
 	/>
 </span>
