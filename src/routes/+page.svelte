@@ -54,11 +54,16 @@
 		hsl.toCssProperty
 	)}
 >
-	<div class="flex-1 container mx-auto flex flex-col">
+	<div class="flex-1 container mx-auto flex flex-col text-[--temp-ink-black]">
 		<div class="flex-1" />
-		<div class="p-8 flex flex-col gap-4">
+		<div class="p-8 flex flex-col">
 			<TemperatureSlider valueStore={smoothTempKelvin} />
+			<div class="h-4" />
 			<TemperatureTextInput bind:value={$smoothTempKelvin} />
+			<a
+				href="https://bryanmylee.com"
+				class="w-fit uppercase font-semibold tracking-wide text-[--temp-ink]">Bryan Lee</a
+			>
 		</div>
 	</div>
 </div>
