@@ -15,7 +15,7 @@
 		},
 		(output) => String(output)
 	);
-	$: temperatureHsl = pipe($temperatureKelvin, rgb.fromTemperature, hsl.fromRgb);
+	$: temperatureHsl = pipe($temperatureKelvin, temperature.toRgb, rgb.toHsl);
 </script>
 
 <div

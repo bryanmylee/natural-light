@@ -1,6 +1,5 @@
 import { clampUnit, isInRange, isUnit } from '$lib/math';
 import type { Branded } from '../brand';
-import type { Rgb } from './rgb';
 
 export type Hue = Branded<'HslHue', number>;
 export type Saturation = Branded<'HslSaturation', number>;
@@ -37,26 +36,6 @@ export const create = (h: number, s: number, l: number): Hsl => {
 };
 export const createUnsafe = (h: number, s: number, l: number): Hsl => {
 	return [h, s, l] as const as Hsl;
-};
-
-export const fromRgb = (rgb: Rgb): Hsl => {
-	const r = rgb[0] / 255;
-	const g = rgb[1] / 255;
-	const b = rgb[2] / 255;
-	const max = Math.max(r, g, b);
-	const min = Math.min(r, g, b);
-	const delta = max - min;
-	const lightness = (max + min) / 2;
-	const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(2 * lightness - 1));
-	const hue =
-		max === r
-			? 60 * (((g - b) / delta) % 6)
-			: max === g
-				? 60 * ((b - r) / delta + 2)
-				: max === b
-					? 60 * ((r - g) / delta + 4)
-					: 0;
-	return create(hue, saturation, lightness);
 };
 
 export const toCssProperty = ([h, s, l]: Hsl): string => {
