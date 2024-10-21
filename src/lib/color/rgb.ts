@@ -6,22 +6,22 @@ export type RgbComponent = Branded<'RgbComponent', number>;
 
 export const isRgbComponentValid = isInRange(0, 255) as (value: number) => value is RgbComponent;
 export const clampRgbComponent = clamp(0, 255) as (value: number) => RgbComponent;
-export function assertRgbComponentValid(value: number): asserts value is RgbComponent {
+export const assertRgbComponentValid = (value: number): asserts value is RgbComponent => {
 	if (!isRgbComponentValid(value)) throw new Error(`Invalid RGB component ${value}`);
-}
+};
 
 export type Rgb = Branded<'Rgb', readonly [RgbComponent, RgbComponent, RgbComponent]>;
 
-export function create(r: number, g: number, b: number): Rgb {
+export const create = (r: number, g: number, b: number): Rgb => {
 	return [clampRgbComponent(r), clampRgbComponent(g), clampRgbComponent(b)] as const as Rgb;
-}
-export function createUnsafe(r: number, g: number, b: number): Rgb {
+};
+export const createUnsafe = (r: number, g: number, b: number): Rgb => {
 	return [r, g, b] as const as Rgb;
-}
+};
 
-export function toCssProperty([r, g, b]: Rgb): string {
+export const toCssProperty = ([r, g, b]: Rgb): string => {
 	return `rgb(${r} ${g} ${b})`;
-}
+};
 
 export const toHsl = (rgb: Rgb): hsl.Hsl => {
 	const r = rgb[0] / 255;

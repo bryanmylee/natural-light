@@ -6,11 +6,11 @@
 	let valueString: string = value.toString();
 	$: valueString = Math.round(value).toString();
 
-	function updateValue() {
+	const updateValue = () => {
 		const floatValue = parseFloat(valueString);
 		value = isNaN(floatValue) ? value : temperature.kelvin(floatValue);
 		valueString = Math.round(value).toString();
-	}
+	};
 </script>
 
 <form

@@ -4,12 +4,12 @@ import * as rgb from './rgb';
 
 export type Kelvin = Branded<'Kelvin', number>;
 
-export function kelvin(value: number): Kelvin {
+export const kelvin = (value: number): Kelvin => {
 	return clamp(min, max)(value) as Kelvin;
-}
-export function kelvinUnsafe(value: number): Kelvin {
+};
+export const kelvinUnsafe = (value: number): Kelvin => {
 	return value as Kelvin;
-}
+};
 
 export const min = kelvinUnsafe(2600);
 export const max = kelvinUnsafe(10600);
@@ -20,7 +20,7 @@ export const whiteHigh = kelvinUnsafe(6800);
 /**
  * Return a smooth curve crossing (whiteLow, 0), (white, 1), (whiteHigh, 0).
  */
-export function whiteFactor(temperature: Kelvin): number {
+export const whiteFactor = (temperature: Kelvin): number => {
 	if (temperature < whiteLow || temperature > whiteHigh) return 0;
 	// map whiteLow..whiteHigh to 0..1
 	const x = (temperature - whiteLow) / (whiteHigh - whiteLow);
@@ -29,12 +29,12 @@ export function whiteFactor(temperature: Kelvin): number {
 	// the flatness at the base of the curve
 	const f = 1.25;
 	return 1 - Math.pow(u, f);
-}
+};
 
 /**
  * https://github.com/neilbartlett/color-temperature
  */
-export function toRgb(temperature: Kelvin): rgb.Rgb {
+export const toRgb = (temperature: Kelvin): rgb.Rgb => {
 	const temp = temperature / 100;
 	let red: number, green: number, blue: number;
 
@@ -74,4 +74,4 @@ export function toRgb(temperature: Kelvin): rgb.Rgb {
 	}
 
 	return rgb.create(red, green, blue);
-}
+};
