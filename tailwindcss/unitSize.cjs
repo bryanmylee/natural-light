@@ -22,11 +22,11 @@ const unitSize = plugin(({ addUtilities, e }) => {
 	]);
 	addUtilities(Object.fromEntries(fontSize));
 
-	// const ringSize = sizes.map((size) => [
-	// 	'.' + e(`text-${suffix(size)}`),
-	// 	{ fontSize: `calc(${size} * var(--unit-size))` }
-	// ]);
-	// addUtilities(Object.fromEntries(fontSize));
+	const padding = sizes.map((size) => [
+		'.' + e(`p-${suffix(size)}`),
+		{ padding: `calc(${size} * var(--unit-size))` }
+	]);
+	addUtilities(Object.fromEntries(padding));
 });
 
 module.exports = unitSize;

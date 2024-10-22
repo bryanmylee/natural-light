@@ -45,7 +45,7 @@
 <div class="fixed inset-0 flex flex-col items-center">
 	<div class="flex-1 container mx-auto flex flex-col text-[--temp-ink-black]">
 		<div class="flex-1" />
-		<div class="p-8 flex flex-col">
+		<div class="p-unit-8 flex flex-col">
 			<TemperatureSlider
 				valueStore={smoothTempKelvin}
 				min={temperature.min}
