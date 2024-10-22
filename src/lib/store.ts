@@ -1,5 +1,10 @@
-import { spring, type Spring, type SpringOpts } from 'svelte/motion';
-import { derived, type Updater, type Writable } from 'svelte/store';
+import {
+	spring,
+	type SpringOpts,
+	type Updater as MotionUpdater,
+	type SpringUpdateOpts
+} from 'svelte/motion';
+import { derived, type Readable, type Updater, type Writable } from 'svelte/store';
 
 export const transformed = <T, U>(
 	source: Writable<T>,
@@ -31,13 +36,23 @@ export type SnappedValue<T> = {
 	snapped: 0 | 1;
 };
 
-export type SnappedSpring<T> = Spring<T>;
+export type SnappedSpringUpdateOpts = SpringUpdateOpts & {
+	snap?: boolean;
+};
+
+export type SnappedSpring<T> = Readable<T> & {
+	set: (new_value: T, opts?: SnappedSpringUpdateOpts) => Promise<void>;
+	update: (fn: MotionUpdater<T>, opts?: SnappedSpringUpdateOpts) => Promise<void>;
+	precision: number;
+	damping: number;
+	stiffness: number;
+};
 
 export const snappedSpring = <T>(
 	value: T,
 	{ snapPoints = [], ...opts }: SnappedSpringOpts<T> = {}
 ): SnappedSpring<T> => {
-	const getSnappedValue = (value: T): T => {
+	const snapped = (value: T): T => {
 		for (const snapPoint of snapPoints) {
 			if (snapPoint.min <= value && value <= snapPoint.max) {
 				return snapPoint.value;
@@ -51,12 +66,20 @@ export const snappedSpring = <T>(
 	return {
 		...store,
 		set(newValue, opts) {
-			return store.set(getSnappedValue(newValue), opts);
+			if (opts?.snap === false) {
+				return store.set(newValue, opts);
+			} else {
+				return store.set(snapped(newValue), opts);
+			}
 		},
 		update(updater, opts) {
 			return store.update((targetValue, currentValue) => {
-				return getSnappedValue(updater(targetValue, currentValue));
+				if (opts?.snap === false) {
+					return updater(targetValue, currentValue);
+				} else {
+					return snapped(updater(targetValue, currentValue));
+				}
 			}, opts);
 		}
-	};
+	} satisfies SnappedSpring<T>;
 };
