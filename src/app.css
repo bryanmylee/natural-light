@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--unit-size: max(0.25rem, 0.5vw);
+}
+
 * {
 	-webkit-tap-highlight-color: transparent;
 	-webkit-touch-callout: none;
@@ -10,4 +14,22 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+.trim-inter {
+	&::before {
+		content: '';
+		margin-bottom: -0.39em;
+		display: table;
+	}
+	&::after {
+		content: '';
+		margin-top: -0.39em;
+		display: table;
+	}
+}
+
+.measure-height {
+	/* border-top: 1px dashed theme(colors.green.400);
+	border-bottom: 1px dashed theme(colors.red.400); */
 }

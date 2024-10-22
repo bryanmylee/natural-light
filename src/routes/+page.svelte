@@ -42,7 +42,7 @@
 	$: setDocumentTheme($tempTheme);
 </script>
 
-<div class="fixed inset-0 flex flex-col items-center" style:--unit-size="max(0.25rem,0.5vw)">
+<div class="fixed inset-0 flex flex-col items-center">
 	<div class="flex-1 container mx-auto flex flex-col text-[--temp-ink-black]">
 		<div class="flex-1" />
 		<div class="p-8 flex flex-col">
@@ -52,15 +52,22 @@
 				max={temperature.max}
 				ticks={temperature.samples}
 			/>
-			<div class="h-2" />
+			<div class="h-unit-4" />
 			<TemperatureTextInput bind:value={$smoothTempKelvin} />
-			<div class="text-[clamp(0.9rem,1rem+1vw,5rem)]">
-				<p class="font-semibold">{temperature.getSample($smoothTempKelvin).name}</p>
-				<!-- <a
-					href="https://bryanmylee.com"
-					class="w-fit uppercase font-semibold text-[0.75em] focus-visible:outline-none focus-visible:underline text-[--temp-ink]"
-					>Bryan Lee</a
-				> -->
+			<div class="h-unit-4" />
+			<div class="text-unit-5">
+				<p class="measure-height font-semibold trim-inter">
+					{temperature.getSample($smoothTempKelvin).name}
+				</p>
+				<div class="h-unit-4" />
+				<p class="measure-height trim-inter text-[0.7em]">
+					<a
+						href="https://bryanmylee.com"
+						class="w-fit uppercase font-semibold hover:opacity-75 focus-visible:outline-none focus-visible:underline text-[--temp-ink]"
+					>
+						Bryan Lee
+					</a>
+				</p>
 			</div>
 		</div>
 	</div>

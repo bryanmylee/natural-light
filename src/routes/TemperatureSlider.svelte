@@ -28,9 +28,9 @@
 	});
 </script>
 
-<span use:melt={$root} class="relative flex h-[20px] items-center">
-	<span class="h-[--unit-size] w-full rounded-full bg-[--temp-ink-dark]">
-		<span {...$range} use:range class="h-[--unit-size] rounded-full bg-[--temp-ink]" />
+<span use:melt={$root} class="measure-height relative h-unit-7 flex items-center">
+	<span class="h-unit w-full rounded-full bg-[--temp-ink-dark]">
+		<span {...$range} use:range class="h-unit rounded-full bg-[--temp-ink]" />
 	</span>
 
 	{#each ticks as tick}
@@ -38,12 +38,12 @@
 			data-value={tick.ideal}
 			data-bounded={tick.ideal <= $valueStore || undefined}
 			style:--value-offset="{((tick.ideal - min) / (max - min)) * 100}%"
-			class="h-[calc(var(--unit-size)*3)] w-[--unit-size] rounded-full absolute left-[--value-offset] rtl:right-[--value-offset] rtl:left-auto -translate-x-1/2 rtl:translate-x-0 bg-[--temp-ink-dark] data-[bounded]:bg-[--temp-ink]"
+			class="h-unit-3 w-unit rounded-full absolute left-[--value-offset] rtl:right-[--value-offset] rtl:left-auto -translate-x-1/2 rtl:translate-x-0 bg-[--temp-ink-dark] data-[bounded]:bg-[--temp-ink]"
 		/>
 	{/each}
 
 	<span
 		use:melt={$thumbs[0]}
-		class="h-[calc(var(--unit-size)*4)] w-[calc(var(--unit-size)*4)] rounded-full bg-[--temp-ink] focus-visible:outline-none focus:ring-[length:--unit-size] ring-[--temp-ink] focus:bg-[--temp-paper]"
+		class="h-unit-4 w-unit-4 rounded-full bg-[--temp-ink] focus-visible:outline-none focus:ring-[length:--unit-size] ring-[--temp-ink] focus:bg-[--temp-paper]"
 	/>
 </span>
