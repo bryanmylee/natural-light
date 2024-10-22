@@ -26,7 +26,9 @@
 		class="peer absolute bg-transparent px-1 -mx-1 focus-visible:outline-none caret-[--temp-ink] selection:bg-[--temp-highlight] selection:text-[--temp-ink-dark]"
 		on:blur={updateValue}
 	/>
-	<span class="px-1 -mx-1 peer-focus-visible:ring-4 ring-[--temp-ink] text-transparent rounded-lg">
+	<span
+		class="px-1 -mx-1 peer-focus-visible:ring-[length:--unit-size] ring-[--temp-ink] text-transparent rounded-lg"
+	>
 		{valueString}
 	</span>
 	<span class="text-[--temp-ink-dark]">K</span>
