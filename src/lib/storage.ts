@@ -1,14 +1,17 @@
 import { writable, type Updater, type Writable } from 'svelte/store';
 
 export function useLocalStorage(key: string): Writable<string | null>;
-export function useLocalStorage(key: string, defaultValue: string): Writable<string>;
-export function useLocalStorage(key: string, defaultValue?: string): Writable<string | null> {
-	const store = writable(defaultValue ?? null, (set) => {
+export function useLocalStorage(key: string, defaultValue: string | null): Writable<string>;
+export function useLocalStorage(
+	key: string,
+	defaultValue: string | null = null
+): Writable<string | null> {
+	const store = writable(defaultValue, (set) => {
 		if (typeof window === 'undefined' || typeof localStorage === 'undefined') return;
-		set(localStorage.getItem(key));
+		set(localStorage.getItem(key) ?? defaultValue);
 		const handler = (ev: StorageEvent) => {
 			if (ev.key !== key) return;
-			set(ev.newValue);
+			set(ev.newValue ?? defaultValue);
 		};
 		window.addEventListener('storage', handler);
 		return () => window.removeEventListener('storage', handler);
@@ -29,7 +32,7 @@ export function useLocalStorage(key: string, defaultValue?: string): Writable<st
 	 * If set to `null`, removes the item from local storage.
 	 */
 	const set = (value: string | null) => {
-		store.set(value ?? defaultValue ?? null);
+		store.set(value ?? defaultValue);
 		setLocalStorage(value);
 	};
 
@@ -42,7 +45,7 @@ export function useLocalStorage(key: string, defaultValue?: string): Writable<st
 		store.update((value) => {
 			const newValue = updater(value);
 			setLocalStorage(newValue);
-			return newValue ?? defaultValue ?? null;
+			return newValue ?? defaultValue;
 		});
 	};
 

@@ -2,13 +2,14 @@
 	import { snappedSpring, transformed } from '$lib/store';
 	import { useLocalStorage } from '$lib/storage';
 	import * as temperature from '$lib/color/temperature';
-	import * as rgb from '$lib/color/rgb';
-	import * as hsl from '$lib/color/hsl';
-	import { pipe } from '$lib/pipe';
+	import * as v from 'valibot';
 	import TemperatureSlider from './TemperatureSlider.svelte';
-	import { lerp } from '$lib/math';
 	import TemperatureTextInput from './TemperatureTextInput.svelte';
-	import { setDocumentColor } from '$lib/document';
+	import {
+		getTemperatureTheme,
+		setDocumentTheme,
+		TemperatureThemeSchema
+	} from './temperatureTheme';
 
 	const tempKelvin = transformed(
 		useLocalStorage('temperature_in_kelvin', '6600'),
@@ -28,43 +29,20 @@
 	});
 	$: tempKelvin.set($smoothTempKelvin);
 
-	$: tempHsl = pipe($tempKelvin, temperature.toRgb, rgb.toHsl);
-	$: setDocumentColor(tempHsl);
-	$: whiteFactor = temperature.whiteFactor($tempKelvin);
+	const tempTheme = transformed(
+		useLocalStorage('temperature_theme'),
+		(input) => {
+			const parseResult = v.safeParse(v.nullable(TemperatureThemeSchema), input);
+			const defaultTheme = getTemperatureTheme($tempKelvin);
+			return parseResult.success ? parseResult.output ?? defaultTheme : defaultTheme;
+		},
+		(output) => JSON.stringify(output)
+	);
+	$: $tempTheme = getTemperatureTheme($tempKelvin);
+	$: setDocumentTheme($tempTheme);
 </script>
 
-<svelte:head>
-	<title>Natural Light</title>
-</svelte:head>
-
-<div
-	class="fixed inset-0 flex flex-col items-center bg-[--temp-paper]"
-	style:--temp-paper={pipe(tempHsl, hsl.toCssProperty)}
-	style:--temp-ink-black={pipe(
-		tempHsl,
-		hsl.darken(0.8),
-		hsl.desaturate(lerp(0.2, 1)(whiteFactor)),
-		hsl.toCssProperty
-	)}
-	style:--temp-ink-dark={pipe(
-		tempHsl,
-		hsl.darken(0.6),
-		hsl.desaturate(lerp(0.6, 1)(whiteFactor)),
-		hsl.toCssProperty
-	)}
-	style:--temp-ink={pipe(
-		tempHsl,
-		hsl.darken(0.3),
-		hsl.desaturate(lerp(0.5, 1)(whiteFactor)),
-		hsl.toCssProperty
-	)}
-	style:--temp-highlight={pipe(
-		tempHsl,
-		hsl.darken(-0.05),
-		hsl.desaturate(lerp(0.2, 1)(whiteFactor)),
-		hsl.toCssProperty
-	)}
->
+<div class="fixed inset-0 flex flex-col items-center">
 	<div class="flex-1 container mx-auto flex flex-col text-[--temp-ink-black]">
 		<div class="flex-1" />
 		<div class="p-8 flex flex-col">
