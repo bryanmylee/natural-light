@@ -34,18 +34,6 @@
 	});
 	$: tempKelvin.set($smoothTempKelvin);
 
-	const tempSample: Writable<temperature.TemperatureSample> = {
-		...derived(smoothTempKelvin, ($smoothTempKelvin) => temperature.getSample($smoothTempKelvin)),
-		set(newValue) {
-			smoothTempKelvin.set(newValue.ideal);
-		},
-		update(updater) {
-			smoothTempKelvin.update((prev) => {
-				return updater(temperature.getSample(prev)).ideal;
-			});
-		}
-	};
-
 	const tempTheme = transformed(
 		useLocalStorage('temperature_theme'),
 		(input) => {
@@ -70,10 +58,25 @@
 				ticks={temperature.samples}
 			/>
 			<div class="h-unit-4" />
-			<TemperatureTextInput bind:value={$smoothTempKelvin} />
+			<TemperatureTextInput valueStore={smoothTempKelvin} />
 			<div class="h-unit-4" />
 			<div class="text-unit-5">
-				<TemperatureSelect options={temperature.samples} valueStore={tempSample} />
+				<TemperatureSelect
+					options={temperature.samples}
+					valueStore={{
+						...derived(smoothTempKelvin, ($smoothTempKelvin) =>
+							temperature.getSample($smoothTempKelvin)
+						),
+						set(newValue) {
+							smoothTempKelvin.set(newValue.ideal);
+						},
+						update(updater) {
+							smoothTempKelvin.update((prev) => {
+								return updater(temperature.getSample(prev)).ideal;
+							});
+						}
+					}}
+				/>
 				<div class="h-unit-4" />
 				<p class="measure-height trim-inter text-[0.7em]">
 					<a

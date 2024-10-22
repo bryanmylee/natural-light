@@ -1,15 +1,17 @@
 <script lang="ts">
 	import * as temperature from '$lib/color/temperature';
+	import type { Writable } from 'svelte/store';
 
-	export let value: temperature.Kelvin;
+	export let valueStore: Writable<temperature.Kelvin>;
 
-	let valueString: string = value.toString();
-	$: valueString = Math.round(value).toString();
+	$: valueString = Math.round($valueStore).toString();
 
 	const updateValue = () => {
-		const floatValue = parseFloat(valueString);
-		value = isNaN(floatValue) ? value : temperature.kelvin(floatValue);
-		valueString = Math.round(value).toString();
+		const valueFloat = parseFloat(valueString);
+		if (!isNaN(valueFloat)) {
+			valueStore.set(temperature.kelvin(valueFloat));
+		}
+		valueString = Math.round($valueStore).toString();
 	};
 </script>
 
