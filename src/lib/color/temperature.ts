@@ -11,8 +11,8 @@ export const kelvinUnsafe = (value: number): Kelvin => {
 	return value as Kelvin;
 };
 
-export const min = kelvinUnsafe(1600);
-export const max = kelvinUnsafe(11600);
+export const min = kelvinUnsafe(1000);
+export const max = kelvinUnsafe(12000);
 
 export type TemperatureSample = {
 	ideal: Kelvin;

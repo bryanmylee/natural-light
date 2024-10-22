@@ -46,7 +46,12 @@
 	<div class="flex-1 container mx-auto flex flex-col text-[--temp-ink-black]">
 		<div class="flex-1" />
 		<div class="p-8 flex flex-col">
-			<TemperatureSlider valueStore={smoothTempKelvin} />
+			<TemperatureSlider
+				valueStore={smoothTempKelvin}
+				min={temperature.min}
+				max={temperature.max}
+				ticks={temperature.samples}
+			/>
 			<div class="h-2" />
 			<TemperatureTextInput bind:value={$smoothTempKelvin} />
 			<div class="text-[clamp(0.9rem,1rem+1vw,5rem)]">

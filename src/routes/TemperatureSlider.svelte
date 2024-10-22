@@ -4,6 +4,9 @@
 	import { derived, type Updater, type Writable } from 'svelte/store';
 
 	export let valueStore: Writable<temperature.Kelvin>;
+	export let min: temperature.Kelvin;
+	export let max: temperature.Kelvin;
+	export let ticks: temperature.TemperatureSample[];
 
 	const value = {
 		...derived(valueStore, ($valueStore) => [$valueStore]),
@@ -19,16 +22,25 @@
 		elements: { root, range, thumbs }
 	} = createSlider({
 		value,
-		min: temperature.min,
-		max: temperature.max,
+		min,
+		max,
 		step: 1
 	});
 </script>
 
 <span use:melt={$root} class="relative flex h-[20px] items-center">
-	<span class="h-1 w-full bg-[--temp-ink-dark]">
-		<span {...$range} use:range class="h-1 bg-[--temp-ink]" />
+	<span class="h-1 w-full rounded-full bg-[--temp-ink-dark]">
+		<span {...$range} use:range class="h-1 rounded-full bg-[--temp-ink]" />
 	</span>
+
+	{#each ticks as tick}
+		<span
+			data-value={tick.ideal}
+			data-bounded={tick.ideal <= $valueStore || undefined}
+			style:--value-offset="{((tick.ideal - min) / (max - min)) * 100}%"
+			class="h-3 w-1 rounded-full absolute left-[--value-offset] rtl:right-[--value-offset] rtl:left-auto -translate-x-1/2 rtl:translate-x-0 bg-[--temp-ink-dark] data-[bounded]:bg-[--temp-ink]"
+		/>
+	{/each}
 
 	<span
 		use:melt={$thumbs[0]}
