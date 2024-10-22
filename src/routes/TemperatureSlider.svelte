@@ -8,20 +8,18 @@
 	export let max: temperature.Kelvin;
 	export let ticks: temperature.TemperatureSample[];
 
-	const value = {
-		...derived(valueStore, ($valueStore) => [$valueStore]),
-		set(newValue: temperature.Kelvin[]) {
-			valueStore.set(newValue[0]);
-		},
-		update(updater: Updater<temperature.Kelvin[]>) {
-			valueStore.update((prev) => updater([prev])[0]);
-		}
-	};
-
 	const {
 		elements: { root, range, thumbs }
 	} = createSlider({
-		value,
+		value: {
+			...derived(valueStore, ($value) => [$value]),
+			set(newValue: temperature.Kelvin[]) {
+				valueStore.set(newValue[0]);
+			},
+			update(updater: Updater<temperature.Kelvin[]>) {
+				valueStore.update((prev) => updater([prev])[0]);
+			}
+		},
 		min,
 		max,
 		step: 1
