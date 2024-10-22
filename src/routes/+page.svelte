@@ -21,6 +21,9 @@
 	);
 
 	const smoothTempKelvin = snappedSpring($tempKelvin, {
+		stiffness: 0.3,
+		damping: 0.8,
+		precision: 0.01,
 		snapPoints: temperature.samples.map((sample) => ({
 			min: temperature.kelvin(sample.ideal - 250),
 			value: sample.ideal,
