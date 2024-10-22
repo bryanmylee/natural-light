@@ -16,7 +16,7 @@
 </script>
 
 <form
-	class="measure-height font-extrabold trim-inter text-unit-12 text-[--temp-ink-black] relative"
+	class="font-extrabold trim-inter text-unit-12 text-[--temp-ink-black] relative"
 	on:submit={(ev) => {
 		ev.preventDefault();
 		updateValue();
@@ -29,7 +29,7 @@
 		on:blur={updateValue}
 	/>
 	<span
-		class="peer-focus-visible:ring-[length:--unit-size] ring-[--temp-ink] text-transparent rounded-lg"
+		class="px-1 -mx-1 peer-focus-visible:ring-[length:--unit-size] ring-[--temp-ink] text-transparent rounded-lg"
 	>
 		{valueString}
 	</span>

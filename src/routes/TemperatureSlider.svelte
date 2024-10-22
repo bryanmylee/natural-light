@@ -26,7 +26,7 @@
 	});
 </script>
 
-<span use:melt={$root} class="measure-height relative h-unit-7 flex items-center">
+<span use:melt={$root} class="relative h-unit-7 flex items-center">
 	<span class="h-unit w-full rounded-full bg-[--temp-ink-dark]">
 		<span {...$range} use:range class="h-unit rounded-full bg-[--temp-ink]" />
 	</span>
