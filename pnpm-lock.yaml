@@ -2,7 +2,7 @@ lockfileVersion: '6.0'
 
 patchedDependencies:
   '@melt-ui/svelte@0.83.0':
-    hash: owl6p2ebkxjk6hx7plqek5jo3q
+    hash: osh3bat5wt7l2llnmri6ynlvxe
     path: patches/@melt-ui__svelte@0.83.0.patch
 
 dependencies:
@@ -16,7 +16,7 @@ devDependencies:
     version: 0.3.2(@melt-ui/svelte@0.83.0)(svelte@4.2.7)
   '@melt-ui/svelte':
     specifier: ^0.83.0
-    version: 0.83.0(patch_hash=owl6p2ebkxjk6hx7plqek5jo3q)(svelte@4.2.7)
+    version: 0.83.0(patch_hash=osh3bat5wt7l2llnmri6ynlvxe)(svelte@4.2.7)
   '@sveltejs/adapter-auto':
     specifier: ^3.0.0
     version: 3.0.0(@sveltejs/kit@2.0.0)
@@ -918,13 +918,13 @@ packages:
       '@melt-ui/svelte': '>= 0.29.0'
       svelte: ^3.55.0 || ^4.0.0 || ^5.0.0-next.1
     dependencies:
-      '@melt-ui/svelte': 0.83.0(patch_hash=owl6p2ebkxjk6hx7plqek5jo3q)(svelte@4.2.7)
+      '@melt-ui/svelte': 0.83.0(patch_hash=osh3bat5wt7l2llnmri6ynlvxe)(svelte@4.2.7)
       estree-walker: 3.0.3
       magic-string: 0.30.12
       svelte: 4.2.7
     dev: true
 
-  /@melt-ui/svelte@0.83.0(patch_hash=owl6p2ebkxjk6hx7plqek5jo3q)(svelte@4.2.7):
+  /@melt-ui/svelte@0.83.0(patch_hash=osh3bat5wt7l2llnmri6ynlvxe)(svelte@4.2.7):
     resolution: {integrity: sha512-E7QT+8YSftz+Hdk1W0hNR3f+cnaF2COMWkStn+2u4vk0RO1I9mXRJl+bJD6uhYaH146oxEB+5elu/ABbv6rpsA==}
     peerDependencies:
       svelte: ^3.0.0 || ^4.0.0 || ^5.0.0-next.118

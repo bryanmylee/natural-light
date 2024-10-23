@@ -11,16 +11,16 @@
 
 	const {
 		elements: { root, range, thumbs },
-		states: { isActive }
+		states: { active }
 	} = createSlider({
 		value: {
 			...derived(valueStore, ($value) => [$value]),
 			set(newValue: temperature.Kelvin[]) {
-				if (!$isActive) return;
+				if (!$active) return;
 				valueStore.set(newValue[0]);
 			},
 			update(updater: Updater<temperature.Kelvin[]>) {
-				if (!$isActive) return;
+				if (!$active) return;
 				valueStore.update((prev) => updater([prev])[0]);
 			}
 		},
