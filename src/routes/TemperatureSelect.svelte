@@ -35,7 +35,7 @@
 <div>
 	<button
 		use:melt={$trigger}
-		class="font-semibold trim-inter hover:opacity-50 transition-opacity text-left focus-visible:outline-none focus-visible:underline"
+		class="font-semibold trim-inter hover:opacity-50 transition-opacity text-left focus-visible:outline-none focus-visible:underline underline-offset-2"
 		aria-label="Temperature"
 	>
 		{$selectedLabel}
@@ -49,7 +49,7 @@
 			{#each options as sampleOption}
 				<li
 					use:melt={$option({ value: sampleOption, label: sampleOption.name })}
-					class="font-medium trim-inter p-3 rounded-lg text-[--temp-highlight] data-[selected]:bg-[--temp-ink] data-[highlighted]:bg-[--temp-ink] data-[highlighted]:underline cursor-pointer"
+					class="font-medium trim-inter p-3 rounded-lg text-[--temp-highlight] data-[selected]:bg-[--temp-ink] data-[highlighted]:bg-[--temp-ink] data-[highlighted]:underline underline-offset-2 cursor-pointer"
 				>
 					{sampleOption.name}
 				</li>

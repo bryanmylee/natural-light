@@ -81,7 +81,7 @@
 				<p class="trim-inter text-[0.7em]">
 					<a
 						href="https://bryanmylee.com"
-						class="w-fit uppercase font-semibold text-[--temp-ink] hover:opacity-50 transition-opacity focus-visible:outline-none focus-visible:underline"
+						class="w-fit uppercase font-semibold text-[--temp-ink] hover:opacity-50 transition-opacity focus-visible:outline-none focus-visible:underline underline-offset-2"
 					>
 						Bryan Lee
 					</a>
