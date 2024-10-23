@@ -44,12 +44,12 @@
 		<ul
 			use:melt={$menu}
 			transition:fade={{ duration: 200 }}
-			class="z-10 p-1 rounded-md bg-[--temp-ink-black] ring-4 ring-[--temp-paper]"
+			class="z-10 p-1 rounded-sm bg-[--temp-ink-black] ring-4 ring-[--temp-paper]"
 		>
 			{#each options as sampleOption}
 				<li
 					use:melt={$option({ value: sampleOption, label: sampleOption.name })}
-					class="font-medium trim-inter p-3 rounded-sm text-[--temp-highlight] data-[selected]:bg-[--temp-ink] data-[highlighted]:bg-[--temp-ink-dark] data-[highlighted]:ring-4 ring-[--temp-ink] cursor-pointer"
+					class="font-medium trim-inter p-3 text-[--temp-highlight] data-[selected]:bg-[--temp-ink] data-[highlighted]:bg-[--temp-ink] data-[highlighted]:underline cursor-pointer"
 				>
 					{sampleOption.name}
 				</li>
