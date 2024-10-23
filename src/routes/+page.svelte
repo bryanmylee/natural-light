@@ -11,7 +11,7 @@
 		TemperatureThemeSchema
 	} from './temperatureTheme';
 	import TemperatureSelect from './TemperatureSelect.svelte';
-	import { derived, writable, type Writable } from 'svelte/store';
+	import { derived } from 'svelte/store';
 
 	const tempKelvin = transformed(
 		useLocalStorage('temperature_in_kelvin', '6600'),
