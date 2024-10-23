@@ -1,28 +1,31 @@
 <script lang="ts">
 	import * as temperature from '$lib/color/temperature';
+	import type { SnappedSpring } from '$lib/store';
 	import { createSlider, melt } from '@melt-ui/svelte';
-	import { derived, type Updater, type Writable } from 'svelte/store';
+	import { derived, type Updater } from 'svelte/store';
 
-	export let valueStore: Writable<temperature.Kelvin>;
+	export let valueStore: SnappedSpring<temperature.Kelvin>;
 	export let min: temperature.Kelvin;
 	export let max: temperature.Kelvin;
 	export let ticks: temperature.TemperatureSample[];
 
 	const {
-		elements: { root, range, thumbs }
+		elements: { root, range, thumbs },
+		states: { isActive }
 	} = createSlider({
 		value: {
 			...derived(valueStore, ($value) => [$value]),
 			set(newValue: temperature.Kelvin[]) {
+				if (!$isActive) return;
 				valueStore.set(newValue[0]);
 			},
 			update(updater: Updater<temperature.Kelvin[]>) {
+				if (!$isActive) return;
 				valueStore.update((prev) => updater([prev])[0]);
 			}
 		},
 		min,
-		max,
-		step: 1
+		max
 	});
 </script>
 

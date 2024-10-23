@@ -1,17 +1,21 @@
 <script lang="ts">
 	import * as temperature from '$lib/color/temperature';
-	import type { Writable } from 'svelte/store';
+	import type { SnappedSpring } from '$lib/store';
 
-	export let valueStore: Writable<temperature.Kelvin>;
+	export let valueStore: SnappedSpring<temperature.Kelvin>;
 
-	$: valueString = Math.round($valueStore).toString();
+	let valueString = Math.round($valueStore).toString();
+	let focused = false;
+	$: if (!focused) {
+		valueString = Math.round($valueStore).toString();
+	}
 
 	const updateValue = () => {
-		const valueFloat = parseFloat(valueString);
+		const valueFloat = temperature.kelvin(Math.round(parseFloat(valueString)));
 		if (!isNaN(valueFloat)) {
-			valueStore.set(temperature.kelvin(valueFloat));
+			valueString = Math.round(valueFloat).toString();
+			valueStore.set(valueFloat, { snap: false });
 		}
-		valueString = Math.round($valueStore).toString();
 	};
 </script>
 
@@ -26,7 +30,11 @@
 		type="tel"
 		bind:value={valueString}
 		class="peer absolute bg-transparent px-1 -mx-1 focus-visible:outline-none caret-[--temp-ink] selection:bg-[--temp-highlight] selection:text-[--temp-ink-dark]"
-		on:blur={updateValue}
+		on:focus={() => (focused = true)}
+		on:blur={() => {
+			focused = false;
+			updateValue();
+		}}
 	/>
 	<span
 		class="px-1 -mx-1 peer-focus-visible:ring-[length:--unit-size] ring-[--temp-ink] text-transparent rounded-lg"

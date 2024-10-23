@@ -37,5 +37,10 @@
 	"type": "module",
 	"dependencies": {
 		"firebase": "^10.14.1"
+	},
+	"pnpm": {
+		"patchedDependencies": {
+			"@melt-ui/svelte@0.83.0": "patches/@melt-ui__svelte@0.83.0.patch"
+		}
 	}
 }
