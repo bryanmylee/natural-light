@@ -10,7 +10,7 @@ export const useWakeLock = () => {
 		const handleInteraction = () => {
 			// Re-request the wake-lock on user interaction if it's been released
 			// by an external mechanism.
-			if (sentinel != null && sentinel.released) {
+			if (sentinel == null || sentinel.released) {
 				navigator.wakeLock.request('screen').then((sen) => (sentinel = sen));
 			}
 		};
