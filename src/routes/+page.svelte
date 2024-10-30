@@ -12,6 +12,7 @@
 	} from './temperatureTheme';
 	import TemperatureSelect from './TemperatureSelect.svelte';
 	import { derived } from 'svelte/store';
+	import { useWakeLock } from '$lib/wakeLock';
 
 	const tempKelvin = transformed(
 		useLocalStorage('temperature_in_kelvin', '6600'),
@@ -45,6 +46,8 @@
 	);
 	$: $tempTheme = getTemperatureTheme($tempKelvin);
 	$: setDocumentTheme($tempTheme);
+
+	useWakeLock();
 </script>
 
 <div class="fixed inset-0 flex flex-col items-center">
